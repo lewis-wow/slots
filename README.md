@@ -23,14 +23,12 @@ Create slots for PHP layout
 ## create slot (template)
 ```
 <?php $slots->open("head"); ?>
-      <title>My title</title>
+    <title>My title</title>
 <?php $slots->close(); ?>
 
 <?php $slots->open("body"); ?>
     <h1>My heading</h1>
 <?php $slots->close(); ?>
-
-</html>
 ```
 
 ### include
