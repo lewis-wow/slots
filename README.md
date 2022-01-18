@@ -26,12 +26,9 @@ Create slots for PHP layout
       <title>My title</title>
 <?php $slots->close(); ?>
 
-<!-- body slot -->
-<body>
-  <?php $slots->open("body"); ?>
-      <h1>My heading</h1>
-  <?php $slots->close(); ?>
-</body>
+<?php $slots->open("body"); ?>
+    <h1>My heading</h1>
+<?php $slots->close(); ?>
 
 </html>
 ```
