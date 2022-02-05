@@ -4,51 +4,62 @@ class Slots {
     protected $defaultSlotOpen = false;
     protected $slots = [];
 
+    /**
+     * @param string|int $id
+     */
     public function open($id) {
-        if (array_key_exists($id, $this->slots)) return false;
+        if ($this->has($id)) return false;
 
         $this->slots[$id] = "";
         array_push($this->openSlots, $id);
 
         ob_start();
-        ob_implicit_flush(0);
+        ob_implicit_flush(false);
     }
 
     public function close() {
         $id = array_pop($this->openSlots);
-
         $this->slots[$id] = ob_get_clean();
-        return $this;
     }
 
+    /**
+     * @param string|int $id
+     * 
+     * @return bool
+     */
     public function has($id) {
         return isset($this->slots[$id]);
     }
 
+    /**
+     * @param string|int $id
+     * 
+     * @return bool
+     */
     public function isOpen($id) {
         return in_array($id, $this->openSlots);
     }
 
+    /**
+     * @param string|int $id
+     */
     public function slot($id) {
         if ($this->has($id)) {
             echo $this->slots[$id];
-            $this->defaultSlotOpen = false;
         } else {
             $this->defaultSlotOpen = true;
         }
 
         ob_start();
-        ob_implicit_flush(0);
+        ob_implicit_flush(false);
     }
 
     public function endSlot() {
         if (!$this->defaultSlotOpen) {
             ob_end_clean();
-            return $this;
+        } else {
+            $this->defaultSlotOpen = false;
+            echo ob_get_clean();
         }
-
-        $this->defaultSlotOpen = false;
-        echo ob_get_clean();
-        return $this;
     }
 }
